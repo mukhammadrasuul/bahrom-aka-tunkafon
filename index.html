@@ -26,6 +26,20 @@
             background-color: white;
         }
 
+        .receipt-logo {
+            text-align: center;
+            margin: 4px auto 4px auto;
+        }
+
+        .receipt-logo img,
+        .receipt-logo svg {
+            width: 54mm;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
         .receipt-header {
             font-size: 16px;
             font-weight: bold;
@@ -171,8 +185,25 @@
             return ta - tb;
         });
 
+        // Logo markup (uses "uychi tunkafon.jpg" if present in the same folder, or embedded vector logo)
+        var logoHtml = '<div class="receipt-logo">'
+            + '<img src="uychi tunkafon.jpg" alt="Uychi Tunkafon Markazi" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'block\';" />'
+            + '<svg style="display:none;" viewBox="0 0 980 390" xmlns="http://www.w3.org/2000/svg">'
+            +   '<polygon points="30,195 205,20 290,105 290,52 322,52 322,137 380,195 332,195 205,68 78,195" fill="#F97300"/>'
+            +   '<path d="M 318 195 A 122 122 0 1 0 205 362 L 605 362 L 605 330 L 205 330 A 90 90 0 1 1 280 195 Z" fill="#031B59"/>'
+            +   '<rect x="163" y="205" width="33" height="33" fill="#031B59"/>'
+            +   '<rect x="204" y="205" width="33" height="33" fill="#031B59"/>'
+            +   '<rect x="163" y="246" width="33" height="33" fill="#031B59"/>'
+            +   '<rect x="204" y="246" width="33" height="33" fill="#031B59"/>'
+            +   '<text x="262" y="274" font-family="Arial Black, Impact, Arial, sans-serif" font-weight="900" font-size="82" fill="#031B59" letter-spacing="1">UYCHI TUNKA</text>'
+            +   '<text x="795" y="274" font-family="Arial Black, Impact, Arial, sans-serif" font-weight="900" font-size="82" fill="#010D26" letter-spacing="1">FON</text>'
+            +   '<text x="625" y="362" font-family="Arial, sans-serif" font-weight="800" font-size="56" fill="#010D26" letter-spacing="10">MARKAZI</text>'
+            + '</svg>'
+            + '</div>';
+
         // ---- Render the receipt ----
         var html = '';
+        html += logoHtml;
         html += '<div class="receipt-header">Gold Metall Tunkafon Profnastil markazi</div>';
         html += '<div class="line"></div>';
         html += '<div class="transaction-details">'
@@ -225,7 +256,7 @@
 
         document.getElementById('receipt').innerHTML = html;
 
-        // Auto-print once everything is laid out (replaces body onload="window.print()")
+        // Wait for image load before triggering print
         window.addEventListener('load', function () {
             window.print();
         });
